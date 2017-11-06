@@ -1,12 +1,14 @@
 package com.example.sam.myapplication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -19,7 +21,6 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.security.ProviderInstaller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,9 +34,25 @@ public class MainActivity extends AppCompatActivity {
         updateAndroidSecurityProvider(this);
 
         mListView = (ListView) findViewById(R.id.movie_list_view);
-        Repository repo = new Repository();
+        final Repository repo = new Repository();
         MovieAdapter adapter = new MovieAdapter(this, repo.getMovies());
         mListView.setAdapter(adapter);
+
+        final Context context = this;
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Movie selectedMovie= repo.getMovies().get(position);
+
+                Intent detailIntent = new Intent(context, MovieDetailActivity.class);
+                detailIntent.putExtra("title", selectedMovie.getName());
+                detailIntent.putExtra("score", selectedMovie.getScore().toString());
+                detailIntent.putExtra("url", selectedMovie.getImage());
+                detailIntent.putExtra("description", selectedMovie.getDescription());
+                startActivity(detailIntent);
+            }
+        });
     }
 
     public void sendMail(View view){
@@ -47,6 +64,23 @@ public class MainActivity extends AppCompatActivity {
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
         emailIntent.putExtra(Intent.EXTRA_TEXT, message);
         startActivity(Intent.createChooser(emailIntent, "Send email..."));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println(resultCode + requestCode);
+        if (resultCode == RESULT_OK) {
+            if (data.hasExtra("score")) {
+                String score = data.getExtras().getString("score");
+                String name = data.getExtras().getString("name");
+                System.out.println(name + score);
+                final Repository repo = new Repository();
+                repo.setScore(Integer.parseInt(score), name);
+                MovieAdapter adapter = new MovieAdapter(this, repo.getMovies());
+                mListView.setAdapter(adapter);
+            }
+        }
     }
 
     private void updateAndroidSecurityProvider(Activity callingActivity) {

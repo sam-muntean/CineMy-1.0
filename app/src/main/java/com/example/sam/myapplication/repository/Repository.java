@@ -23,6 +23,14 @@ public class Repository {
         movies.add(new Movie("Fight Club", 92, "Sergiu N", "Psychology...", "https://images-na.ssl-images-amazon.com/images/M/MV5BZGY5Y2RjMmItNDg5Yy00NjUwLThjMTEtNDc2OGUzNTBiYmM1XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX182_CR0,0,182,268_AL_.jpg"));
     }
 
+    public void setScore(int score, String name){
+        for(Movie m : movies){
+            if(m.getName() == name){
+                m.setScore(score); break;
+            }
+        }
+    }
+
     public List<Movie> getMovies() {
         return movies;
     }

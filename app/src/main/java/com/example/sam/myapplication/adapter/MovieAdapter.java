@@ -60,7 +60,7 @@ public class MovieAdapter extends BaseAdapter{
         Movie movie = (Movie) getItem(position);
 
         titleTextView.setText(movie.getName());
-        detailTextView.setText(movie.getDescription());
+        detailTextView.setText(movie.getScore().toString());
 
         Picasso.Builder builder = new Picasso.Builder(this.mContext);
         builder.listener(new Picasso.Listener()

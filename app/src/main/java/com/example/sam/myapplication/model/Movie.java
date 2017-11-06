@@ -41,4 +41,8 @@ public class Movie {
     public String getImage() {
         return image;
     }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
 }
