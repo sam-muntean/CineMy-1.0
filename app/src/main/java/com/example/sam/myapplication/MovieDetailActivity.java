@@ -1,5 +1,6 @@
 package com.example.sam.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -54,7 +55,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         Intent data = new Intent();
         data.putExtra("message", message);
         data.putExtra("name", this.getIntent().getExtras().getString("title"));
-        setResult(RESULT_OK, data);
+        setResult(Activity.RESULT_OK, data);
         finish();
     }
 }

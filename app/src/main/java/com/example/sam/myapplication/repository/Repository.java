@@ -25,8 +25,11 @@ public class Repository {
 
     public void setScore(int score, String name){
         for(Movie m : movies){
-            if(m.getName() == name){
-                m.setScore(score); break;
+            if(m.getName().equals(name)){
+                Movie mm = new Movie(name, score, m.getDirector(), m.getDescription(), m.getImage());
+                movies.set(movies.indexOf(m), mm);
+                System.out.println(mm.getName() + mm.getScore());
+                break;
             }
         }
     }

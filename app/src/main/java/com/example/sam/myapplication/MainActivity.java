@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 detailIntent.putExtra("score", selectedMovie.getScore().toString());
                 detailIntent.putExtra("url", selectedMovie.getImage());
                 detailIntent.putExtra("description", selectedMovie.getDescription());
-                startActivity(detailIntent);
+                startActivityForResult(detailIntent, 0);
             }
         });
     }
@@ -67,18 +67,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println(resultCode + requestCode);
-        if (resultCode == RESULT_OK) {
-            if (data.hasExtra("score")) {
-                String score = data.getExtras().getString("score");
-                String name = data.getExtras().getString("name");
-                System.out.println(name + score);
-                final Repository repo = new Repository();
-                repo.setScore(Integer.parseInt(score), name);
-                MovieAdapter adapter = new MovieAdapter(this, repo.getMovies());
-                mListView.setAdapter(adapter);
+        System.out.println(requestCode + " " + resultCode);
+        switch(requestCode) {
+            case (0) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String name = data.getStringExtra("name");
+                    Integer score = Integer.parseInt(data.getStringExtra("message"));
+                    System.out.println(name + score);
+                    Repository repo = new Repository();
+                    repo.setScore(score, name);
+                    System.out.println(repo.getMovies().get(1).getName() + repo.getMovies().get(1).getScore());
+                    MovieAdapter adapter = new MovieAdapter(this, repo.getMovies());
+                    mListView.setAdapter(adapter);
+                }
+                break;
             }
         }
     }
