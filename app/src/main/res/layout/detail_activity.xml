@@ -34,29 +34,29 @@
 
     <TextView
         android:id="@+id/score"
-        android:layout_width="81dp"
-        android:layout_height="50dp"
+        android:layout_width="74dp"
+        android:layout_height="38dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/score"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/movie_description"
         app:layout_constraintStart_toEndOf="@+id/movie_title"
-        app:layout_constraintTop_toBottomOf="@+id/movie_title" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_title"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/movie_score"
-        android:layout_width="37dp"
-        android:layout_height="47dp"
+        android:layout_width="39dp"
+        android:layout_height="38dp"
+        android:layout_gravity="start"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textAlignment="viewStart"
-        android:layout_gravity="start"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/score"
@@ -65,7 +65,7 @@
     <TextView
         android:id="@+id/movie_description"
         android:layout_width="206dp"
-        android:layout_height="168dp"
+        android:layout_height="105dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
@@ -76,7 +76,7 @@
 
     <Button
         android:id="@+id/save_button"
-        android:layout_width="66dp"
+        android:layout_width="76dp"
         android:layout_height="38dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
@@ -85,5 +85,15 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_width="177dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/textView"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_description"></com.github.mikephil.charting.charts.PieChart>
 
 </android.support.constraint.ConstraintLayout>
