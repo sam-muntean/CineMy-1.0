@@ -55,7 +55,7 @@ public class AddMovie extends AppCompatActivity {
         });
 
 
-        System.out.println("scoreeeeeeee++++++++++++" + np.getValue());
+        //System.out.println("scoreeeeeeee++++++++++++" + np.getValue());
         intent.putExtra("score", Integer.toString(np.getValue()));
         intent.putExtra("title", title);
         intent.putExtra("director", author);
