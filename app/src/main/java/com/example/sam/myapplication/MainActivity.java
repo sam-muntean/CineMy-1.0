@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 2);
             } else {
                 addMovieButton.setEnabled(false);
-                Toast.makeText(this, "Only admins can add new books!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Only admins can add new movies!", Toast.LENGTH_SHORT).show();
                 return;
             }
         });
@@ -147,12 +147,17 @@ public class MainActivity extends AppCompatActivity {
     public void sendMail(View view){
         EditText editText = findViewById(R.id.editText);
         String message = editText.getText().toString();
-
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto","sam.muntean@gmail.com", null));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, message);
-        startActivity(Intent.createChooser(emailIntent, "Send email..."));
+        Button sendB = findViewById(R.id.button);
+        if (userRole.equals("admin")) {
+            Toast.makeText(this, "Only users request you movies!", Toast.LENGTH_LONG).show();
+            sendB.setEnabled(false);
+        } else {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", "sam.muntean@gmail.com", null));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, message);
+            startActivity(Intent.createChooser(emailIntent, "Send email..."));
+        }
     }
 
 
@@ -210,7 +215,9 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK){
                 String title = data.getStringExtra("title");
                 String score = data.getStringExtra("score");
-
+                if (score == null) {
+                   score = "0";
+                }
                 Movie movie = movieRepository.getMovieByTitle(title);
                 movie.setScore(Integer.parseInt(score));
                 movieRepository.updateMovie(movie);
