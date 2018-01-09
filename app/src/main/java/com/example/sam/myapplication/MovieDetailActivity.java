@@ -1,11 +1,14 @@
 package com.example.sam.myapplication;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +28,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.detail_activity);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String title = this.getIntent().getExtras().getString("title");
         String url = this.getIntent().getExtras().getString("url");
@@ -75,19 +80,20 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     public void saveScore(View view){
-        EditText editText = findViewById(R.id.movie_score);
-        String message = editText.getText().toString();
-
         Intent data = new Intent();
         String title = this.getIntent().getExtras().getString("title");
-        String desc = this.getIntent().getExtras().getString("description");
         TextView scoreTextView =  this.findViewById(R.id.movie_score);
 
         data.putExtra("title", title);
-        data.putExtra("desc", desc);
         data.putExtra("score", scoreTextView.getText().toString());
 
         setResult(Activity.RESULT_OK, data);
         finish();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 }

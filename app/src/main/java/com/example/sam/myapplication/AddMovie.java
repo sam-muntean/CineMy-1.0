@@ -1,9 +1,12 @@
 package com.example.sam.myapplication;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -11,17 +14,15 @@ public class AddMovie extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_movie_activity);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         NumberPicker np = findViewById(R.id.numberPicker);
-
-
-        //Populate NumberPicker values from minimum and maximum value range
-        //Set the minimum value of NumberPicker
         np.setMinValue(0);
-        //Specify the maximum value/number of NumberPicker
         np.setMaxValue(100);
-        //Gets whether the selector wheel wraps when reaching the min/max value.
 
         String[] nums = new String[101];
         for(int i=0; i<nums.length; i++)
@@ -64,5 +65,11 @@ public class AddMovie extends AppCompatActivity {
 
         setResult(RESULT_OK,intent);
         finish();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 }
