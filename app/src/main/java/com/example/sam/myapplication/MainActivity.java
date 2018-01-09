@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK){
                 String title = data.getStringExtra("title");
                 String score = data.getStringExtra("score");
-                if (score == null) {
+                if (score.equals("")) {
                    score = "0";
                 }
                 Movie movie = movieRepository.getMovieByTitle(title);
